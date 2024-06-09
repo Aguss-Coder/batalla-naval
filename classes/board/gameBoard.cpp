@@ -45,6 +45,10 @@ vector<vector<char>> GameBoard::getSquares()
 }
 
 // Methods
+/**
+ * Draws the game board.
+ * Prints the current state of the game board, including the row and column indices and the contents of each square.
+ */
 void GameBoard::draw()
 {
   cout << "  ";
@@ -82,6 +86,14 @@ bool GameBoard::checkVictory()
   }
   return true;
 }
+/**
+ * Checks if a ship can be placed on the game board.
+ *
+ * @param coordinates The starting coordinates of the ship.
+ * @param size The size of the ship.
+ * @param orientation The orientation of the ship ('H' for horizontal, 'V' for vertical).
+ * @return True if the ship can be placed, false otherwise.
+ */
 bool GameBoard::canPlaceShip(vector<pair<int, int>> coordinates, pair<int, int> size, char orientation)
 {
   if (orientation == 'H')
@@ -114,6 +126,16 @@ bool GameBoard::canPlaceShip(vector<pair<int, int>> coordinates, pair<int, int> 
   }
   return true;
 }
+/**
+ * @brief Places a ship on the game board.
+ *
+ * This function is used to place a ship on the game board based on the given coordinates, size, orientation, and symbol.
+ *
+ * @param coordinates The starting coordinates of the ship.
+ * @param size The size of the ship (width and height).
+ * @param orientation The orientation of the ship ('H' for horizontal, 'V' for vertical).
+ * @param symbol The symbol representing the ship on the game board.
+ */
 void GameBoard::placeShip(vector<pair<int, int>> coordinates, pair<int, int> size, char orientation, char symbol)
 {
   if (orientation == 'H')
