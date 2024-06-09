@@ -2,12 +2,15 @@
 
 using namespace std;
 
-class Game {
-    protected:
-        string partidaGuardada;
-    private:
-        void cargarPartida();
-        void guardarPartida();
-        void nuevaPartida();
-        void elegirJugador();  
+class Game
+{
+protected:
+  string gameSaved;
+
+public:
+  Game();
+  void loadGame();
+  void saveGame();
+  void newGame();
+  void choosePlayer();
 };
