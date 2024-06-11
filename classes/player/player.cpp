@@ -67,3 +67,16 @@ void Player::showBoard()
 {
   board.draw();
 }
+
+pair<int, int> Player::makeShoot()
+{
+}
+
+bool Player::isSunk()
+{
+}
+
+void Player::changeTurn()
+{
+  turn = !turn;
+}

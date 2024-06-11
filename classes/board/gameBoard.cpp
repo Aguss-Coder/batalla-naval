@@ -153,3 +153,15 @@ void GameBoard::placeShip(vector<pair<int, int>> coordinates, pair<int, int> siz
     }
   }
 }
+
+bool GameBoard::checkVictory()
+{
+  for (WarShip &ship : ships)
+  {
+    if (!ship.isSunk())
+    {
+      return false;
+    }
+  }
+  return true;
+}
