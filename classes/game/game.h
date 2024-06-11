@@ -10,7 +10,6 @@ protected:
 public:
   Game();
   void loadGame();
-  void saveGame();
   void newGame();
   void choosePlayer();
 };
