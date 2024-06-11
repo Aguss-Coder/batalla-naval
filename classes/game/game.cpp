@@ -3,6 +3,7 @@
 #include "game.h"
 #include "../player/human.h"
 #include "../player/bot.h"
+#include <string>
 
 using namespace std;
 
@@ -29,5 +30,24 @@ void Game::choosePlayer()
   {
     cout << "Invalid choice. Please try again." << endl;
     choosePlayer();
+  }
+}
+void Game::loadGame()
+{
+  cout << "Loading game..." << endl;
+  try
+  {
+    ifstream file("savedGame.txt");
+
+    if (!file.is_open())
+    {
+      throw runtime_error("Error opening file");
+    }
+
+    // function to read the content of the file to the object
+  }
+  catch (const exception &e)
+  {
+    cout << "An error ocurred: " << e.what() << '\n';
   }
 }
