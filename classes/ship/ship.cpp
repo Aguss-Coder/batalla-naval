@@ -70,12 +70,12 @@ char WarShip::getOrientation()
 
 // Methods
 
-void WarShip::takeShoot(vector<pair<int, int>> shoot)
+void WarShip::takeShoot(pair<int, int> shoot)
 {
     {
         for (int i = 0; i < coordinates.size(); i++)
         {
-            if (coordinates[i].first == shoot[i].first && coordinates[i].second == shoot[i].second)
+            if (coordinates[i].first == shoot.first && coordinates[i].second == shoot.second)
             {
                 damaged = true;
                 coordinates.erase(coordinates.begin() + i);

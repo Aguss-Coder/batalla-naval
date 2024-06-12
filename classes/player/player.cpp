@@ -9,7 +9,7 @@ Player::Player()
   name = "Player";
   turn = false;
 }
-Player::Player(string _name, GameBoard _board, vector<WarShip> _ships, vector<pair<int, int>> _shoot, bool _turn)
+Player::Player(string _name, GameBoard _board, vector<WarShip> _ships, pair<int, int> _shoot, bool _turn)
 {
   name = _name;
   board = _board;
@@ -33,7 +33,7 @@ void Player::setShips()
 }
 void Player::setShoot()
 {
-  shoot = vector<pair<int, int>>(2);
+  shoot = make_pair(0, 0);
 }
 void Player::setTurn()
 {
@@ -53,7 +53,7 @@ vector<WarShip> Player::getShips()
 {
   return ships;
 }
-vector<pair<int, int>> Player::getShoot()
+pair<int, int> Player::getShoot()
 {
   return shoot;
 }
@@ -68,12 +68,10 @@ void Player::showBoard()
   board.draw();
 }
 
-pair<int, int> Player::makeShoot()
+pair<int, int> Player::makeShoot(pair<int, int> _coordinates)
 {
-}
-
-bool Player::isSunk()
-{
+  shoot = _coordinates;
+  return shoot; 
 }
 
 void Player::changeTurn()

@@ -68,23 +68,12 @@ void GameBoard::draw()
     cout << endl;
   }
 }
-void GameBoard::getShoot(vector<pair<int, int>> shoot)
+void GameBoard::getShoot(pair<int, int> shoot)
 {
   for (int i = 0; i < ships.size(); i++)
   {
     ships[i].takeShoot(shoot);
   }
-}
-bool GameBoard::checkVictory()
-{
-  for (int i = 0; i < ships.size(); i++)
-  {
-    if (!ships[i].isSunk())
-    {
-      return false;
-    }
-  }
-  return true;
 }
 /**
  * Checks if a ship can be placed on the game board.
@@ -94,17 +83,17 @@ bool GameBoard::checkVictory()
  * @param orientation The orientation of the ship ('H' for horizontal, 'V' for vertical).
  * @return True if the ship can be placed, false otherwise.
  */
-bool GameBoard::canPlaceShip(vector<pair<int, int>> coordinates, pair<int, int> size, char orientation)
+bool GameBoard::canPlaceShip(pair<int, int> coordinates, pair<int, int> size, char orientation)
 {
   if (orientation == 'H')
   {
-    if (coordinates[0].first + size.first > this->size.first)
+    if (coordinates.first + size.first > this->size.first)
     {
       return false;
     }
     for (int i = 0; i < size.first; i++)
     {
-      if (squares[coordinates[0].first + i][coordinates[0].second] != ' ')
+      if (squares[coordinates.first + i][coordinates.second] != ' ')
       {
         return false;
       }
@@ -112,13 +101,13 @@ bool GameBoard::canPlaceShip(vector<pair<int, int>> coordinates, pair<int, int> 
   }
   else if (orientation == 'V')
   {
-    if (coordinates[0].second + size.second > this->size.second)
+    if (coordinates.second + size.second > this->size.second)
     {
       return false;
     }
     for (int i = 0; i < size.second; i++)
     {
-      if (squares[coordinates[0].first][coordinates[0].second + i] != ' ')
+      if (squares[coordinates.first][coordinates.second + i] != ' ')
       {
         return false;
       }
@@ -136,29 +125,28 @@ bool GameBoard::canPlaceShip(vector<pair<int, int>> coordinates, pair<int, int> 
  * @param orientation The orientation of the ship ('H' for horizontal, 'V' for vertical).
  * @param symbol The symbol representing the ship on the game board.
  */
-void GameBoard::placeShip(vector<pair<int, int>> coordinates, pair<int, int> size, char orientation, char symbol)
+void GameBoard::placeShip(pair<int, int> coordinates, pair<int, int> size, char orientation, char symbol)
 {
   if (orientation == 'H')
   {
     for (int i = 0; i < size.first; i++)
     {
-      squares[coordinates[0].first + i][coordinates[0].second] = symbol;
+      squares[coordinates.first + i][coordinates.second] = symbol;
     }
   }
   else if (orientation == 'V')
   {
     for (int i = 0; i < size.second; i++)
     {
-      squares[coordinates[0].first][coordinates[0].second + i] = symbol;
+      squares[coordinates.first][coordinates.second + i] = symbol;
     }
   }
 }
-
 bool GameBoard::checkVictory()
 {
-  for (WarShip &ship : ships)
+  for (int i = 0; i < ships.size(); i++)
   {
-    if (!ship.isSunk())
+    if (!ships[i].isSunk())
     {
       return false;
     }

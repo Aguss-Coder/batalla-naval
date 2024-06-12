@@ -28,8 +28,8 @@ public:
 
   // Methods
   void draw();
-  void getShoot(vector<pair<int, int>>);
-  bool canPlaceShip(vector<pair<int, int>>, pair<int, int>, char);
-  void placeShip(vector<pair<int, int>>, pair<int, int>, char, char);
+  void getShoot(pair<int, int>);
+  bool canPlaceShip(pair<int, int>, pair<int, int>, char);
+  void placeShip(pair<int, int>, pair<int, int>, char, char);
   bool checkVictory();
 };

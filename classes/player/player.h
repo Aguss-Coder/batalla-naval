@@ -11,13 +11,13 @@ protected:
   string name;
   GameBoard board;
   vector<WarShip> ships;
-  vector<pair<int, int>> shoot;
+  pair<int, int> shoot;
   bool turn;
 
 public:
   // Constructor
   Player();
-  Player(string, GameBoard, vector<WarShip>, vector<pair<int, int>>, bool);
+  Player(string, GameBoard, vector<WarShip>, pair<int, int>, bool);
   // Setters
   void setName();
   void setBoard();
@@ -28,11 +28,10 @@ public:
   string getName();
   GameBoard getBoard();
   vector<WarShip> getShips();
-  vector<pair<int, int>> getShoot();
+  pair<int, int> getShoot();
   bool getTurn();
   // Methods
   void showBoard();
-  pair<int, int> makeShoot();
-  bool isSunk();
+  pair<int, int> makeShoot(pair<int, int>);
   void changeTurn();
 };

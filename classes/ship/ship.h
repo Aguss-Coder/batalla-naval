@@ -31,6 +31,6 @@ public:
   char getSymbol();
   char getOrientation();
   // Methods
-  void takeShoot(vector<pair<int, int>>);
+  void takeShoot(pair<int, int>);
   bool isSunk();
 };

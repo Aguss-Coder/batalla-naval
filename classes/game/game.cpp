@@ -11,6 +11,7 @@ Game::Game()
 {
   Human player1;
 }
+
 void Game::choosePlayer()
 {
   cout << "Choose player: " << endl;
@@ -32,6 +33,13 @@ void Game::choosePlayer()
     choosePlayer();
   }
 }
+
+void Game::newGame()
+{
+  cout << "Starting new game..." << endl;
+  choosePlayer();
+}
+
 void Game::loadGame()
 {
   cout << "Loading game..." << endl;
