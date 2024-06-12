@@ -11,6 +11,7 @@ class GameBoard
 {
 protected:
   vector<WarShip> ships;
+  vector<pair<int, int>> waterPosition;
   pair<int, int> size;
   vector<vector<char>> squares;
 
