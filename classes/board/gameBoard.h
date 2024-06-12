@@ -1,3 +1,6 @@
+#ifndef GAMEBOARD_H
+#define GAMEBOARD_H
+
 #include <iostream>
 #include "../ship/ship.h"
 #include <vector>
@@ -33,3 +36,5 @@ public:
   void placeShip(pair<int, int>, pair<int, int>, char, char);
   bool checkVictory();
 };
+
+#endif

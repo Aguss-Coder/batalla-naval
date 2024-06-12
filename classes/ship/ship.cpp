@@ -5,6 +5,15 @@
 using namespace std;
 
 // constructors
+WarShip::WarShip()
+{
+    size = 0;
+    coordinates = {};
+    sunk = false;
+    damaged = false;
+    symbol = ' ';
+    orientation = ' ';
+}
 WarShip::WarShip(int size_, vector<pair<int, int>> coordinates_, bool sunk_, bool damaged_, char symbol_, char orientation_)
 {
     size = size_;
@@ -73,7 +82,7 @@ char WarShip::getOrientation()
 void WarShip::takeShoot(pair<int, int> shoot)
 {
     {
-        for (int i = 0; i < coordinates.size(); i++)
+        for (size_t i = 0; i < coordinates.size(); i++)
         {
             if (coordinates[i].first == shoot.first && coordinates[i].second == shoot.second)
             {

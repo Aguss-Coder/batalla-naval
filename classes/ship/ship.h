@@ -1,3 +1,6 @@
+#ifndef WARSHIP_H
+#define WARSHIP_H
+
 #include <iostream>
 #include <vector>
 
@@ -15,6 +18,7 @@ protected:
 
 public:
   // Constructor
+  WarShip();
   WarShip(int, vector<pair<int, int>>, bool, bool, char, char);
   // Setters
   void setSize(int);
@@ -34,3 +38,5 @@ public:
   void takeShoot(pair<int, int>);
   bool isSunk();
 };
+
+#endif

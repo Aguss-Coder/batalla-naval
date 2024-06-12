@@ -1,3 +1,6 @@
+#ifndef GAME_H
+#define GAME_H
+
 #include <iostream>
 
 using namespace std;
@@ -12,4 +15,7 @@ public:
   void loadGame();
   void newGame();
   void choosePlayer();
+  void play();
 };
+
+#endif

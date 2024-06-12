@@ -1,3 +1,6 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
 #include <iostream>
 #include "../board/gameBoard.h"
 #include "../ship/ship.h"
@@ -35,3 +38,5 @@ public:
   pair<int, int> makeShoot(pair<int, int>);
   void changeTurn();
 };
+
+#endif

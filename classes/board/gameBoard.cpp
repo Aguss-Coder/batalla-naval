@@ -70,7 +70,7 @@ void GameBoard::draw()
 }
 void GameBoard::getShoot(pair<int, int> shoot)
 {
-  for (int i = 0; i < ships.size(); i++)
+  for (size_t i = 0; i < ships.size(); i++)
   {
     ships[i].takeShoot(shoot);
   }
@@ -144,7 +144,7 @@ void GameBoard::placeShip(pair<int, int> coordinates, pair<int, int> size, char 
 }
 bool GameBoard::checkVictory()
 {
-  for (int i = 0; i < ships.size(); i++)
+  for (size_t i = 0; i < ships.size(); i++)
   {
     if (!ships[i].isSunk())
     {
