@@ -1,16 +1,11 @@
 #include <iostream>
 #include <fstream>
 #include "game.h"
-#include "../player/human.h"
-#include "../player/bot.h"
+#include "human.h"
+#include "bot.h"
 #include <string>
 
 using namespace std;
-
-Game::Game()
-{
-  Human player1;
-}
 
 void Game::choosePlayer()
 {
@@ -37,7 +32,7 @@ void Game::choosePlayer()
 void Game::newGame()
 {
   cout << "Starting new game..." << endl;
-  choosePlayer();
+  play();
 }
 
 void Game::loadGame()
@@ -58,4 +53,10 @@ void Game::loadGame()
   {
     cout << "An error ocurred: " << e.what() << '\n';
   }
+}
+
+void Game::play()
+{
+  cout << "Choose player: " << endl;
+  choosePlayer();
 }

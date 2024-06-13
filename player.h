@@ -2,8 +2,8 @@
 #define PLAYER_H
 
 #include <iostream>
-#include "../board/gameBoard.h"
-#include "../ship/ship.h"
+#include "gameBoard.h"
+#include "ship.h"
 #include <vector>
 
 using namespace std;

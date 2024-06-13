@@ -2,7 +2,7 @@
 #define GAMEBOARD_H
 
 #include <iostream>
-#include "../ship/ship.h"
+#include "ship.h"
 #include <vector>
 
 using namespace std;
