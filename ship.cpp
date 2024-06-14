@@ -14,14 +14,12 @@ WarShip::WarShip()
     symbol = ' ';
     orientation = ' ';
 }
-WarShip::WarShip(int size_, vector<pair<int, int>> coordinates_, bool sunk_, bool damaged_, char symbol_, char orientation_)
+WarShip::WarShip(int size_, char symbol_)
 {
     size = size_;
-    coordinates = coordinates_;
-    sunk = sunk_;
-    damaged = damaged_;
+    sunk = false;
+    damaged = false;
     symbol = symbol_;
-    orientation = orientation_;
 }
 // setters
 void WarShip::setSize(int size_)
@@ -56,7 +54,7 @@ int WarShip::getSize()
 {
     return size;
 }
-vector<pair<int, int>> WarShip::getCoordinates()
+vector<pair<int, int>> WarShip::getCoordinates() const
 {
     return coordinates;
 }
@@ -68,7 +66,7 @@ bool WarShip::getDamaged()
 {
     return damaged;
 }
-char WarShip::getSymbol()
+char WarShip::getSymbol() const
 {
     return symbol;
 }

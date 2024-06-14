@@ -19,7 +19,7 @@ protected:
 public:
   // Constructor
   WarShip();
-  WarShip(int, vector<pair<int, int>>, bool, bool, char, char);
+  WarShip(int, char);
   // Setters
   void setSize(int);
   void setCoordinates(vector<pair<int, int>>);
@@ -29,10 +29,10 @@ public:
   void setOrientation(char);
   // Getters
   int getSize();
-  vector<pair<int, int>> getCoordinates();
+  vector<pair<int, int>> getCoordinates() const;
   bool getSunk();
   bool getDamaged();
-  char getSymbol();
+  char getSymbol() const;
   char getOrientation();
   // Methods
   void takeShoot(pair<int, int>);

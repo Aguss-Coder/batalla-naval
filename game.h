@@ -14,7 +14,8 @@ public:
   void loadGame();
   void newGame();
   void choosePlayer();
-  void play();
+  void humanGameplay();
+  void botGameplay();
 };
 
 #endif

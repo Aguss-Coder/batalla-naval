@@ -9,27 +9,40 @@ Player::Player()
   name = "Player";
   turn = false;
 }
-Player::Player(string _name, GameBoard _board, vector<WarShip> _ships, pair<int, int> _shoot, bool _turn)
+Player::Player(string _name, GameBoard _board, pair<int, int> _shoot, bool _turn)
 {
   name = _name;
   board = _board;
-  ships = _ships;
   shoot = _shoot;
   turn = _turn;
+
+  vector<WarShip> _ships(10);
+
+  _ships.push_back(WarShip(4, 'A'));
+
+  _ships.push_back(WarShip(3, 'B'));
+  _ships.push_back(WarShip(3, 'B'));
+
+  _ships.push_back(WarShip(2, 'C'));
+  _ships.push_back(WarShip(2, 'C'));
+  _ships.push_back(WarShip(2, 'C'));
+
+  _ships.push_back(WarShip(1, 'D'));
+  _ships.push_back(WarShip(1, 'D'));
+  _ships.push_back(WarShip(1, 'D'));
+  _ships.push_back(WarShip(1, 'D'));
+
+  ships = _ships;
 }
 
 // Setters
-void Player::setName()
+void Player::setName(string _name)
 {
-  cin >> name;
+  name = _name;
 }
 void Player::setBoard()
 {
   board = GameBoard();
-}
-void Player::setShips()
-{
-  ships = vector<WarShip>(5);
 }
 void Player::setShoot()
 {
@@ -45,11 +58,11 @@ string Player::getName()
 {
   return name;
 }
-GameBoard Player::getBoard()
+GameBoard &Player::getBoard()
 {
   return board;
 }
-vector<WarShip> Player::getShips()
+vector<WarShip> &Player::getShips()
 {
   return ships;
 }
@@ -71,7 +84,7 @@ void Player::showBoard()
 pair<int, int> Player::makeShoot(pair<int, int> _coordinates)
 {
   shoot = _coordinates;
-  return shoot; 
+  return shoot;
 }
 
 void Player::changeTurn()

@@ -7,7 +7,8 @@ using namespace std;
 // Constructors
 GameBoard::GameBoard()
 {
-  size = make_pair(10, 10);
+  size.first = 10;
+  size.second = 10;
   squares = vector<vector<char>>(size.first, vector<char>(size.second, ' '));
 }
 GameBoard::GameBoard(pair<int, int> _size)
@@ -23,11 +24,23 @@ void GameBoard::setShips(vector<WarShip> _ships)
 }
 void GameBoard::setSize(pair<int, int> _size)
 {
-  size = _size;
+  size.first = _size.first;
+  size.second = _size.second;
 }
-void GameBoard::setSquares(vector<vector<char>> _squares)
+void GameBoard::setSquares(vector<vector<char>> _squares, vector<WarShip> _ships, pair<int, int> _size)
 {
-  squares = _squares;
+  squares.resize(_size.first, vector<char>(_size.second, '~'));
+
+  for (const WarShip &ship : _ships)
+  {
+    for (const auto &coord : ship.getCoordinates())
+    {
+      if (coord.first >= 0 && coord.first < _size.first && coord.second >= 0 && coord.second < _size.second)
+      {
+        squares[coord.first][coord.second] = ship.getSymbol();
+      }
+    }
+  }
 }
 
 // Getters
@@ -51,21 +64,49 @@ vector<vector<char>> GameBoard::getSquares()
  */
 void GameBoard::draw()
 {
-  cout << "  ";
-  for (int i = 0; i < size.first; i++)
+  // Imprime el índice de las columnas con un espacio adicional para alinear con los bordes de las celdas
+  cout << "    "; // Espacios adicionales para alinear los índices de las columnas
+  for (int col = 0; col < size.second; col++)
   {
-    cout << i << " ";
+    cout << col << " ";
   }
   cout << endl;
 
-  for (int i = 0; i < size.first; i++)
+  // Imprime la línea superior del tablero
+  cout << "   +"; // Espacios adicionales para alinear con los índices de las columnas
+  for (int col = 0; col < size.second; col++)
   {
-    cout << i << " ";
-    for (int j = 0; j < size.second; j++)
+    cout << "--"; // Doble línea para cada columna
+  }
+  cout << "+" << endl; // Cierra el borde superior del tablero
+
+  // Imprime el índice de las filas, el contenido de cada celda y los bordes verticales
+  for (int row = 0; row < size.first; row++)
+  {
+    // Asegura que el índice de las filas esté alineado correctamente
+    if (row < 10)
     {
-      cout << squares[i][j] << " ";
+      cout << " " << row << " |"; // Espacio adicional para filas de un solo dígito
+    }
+    else
+    {
+      cout << row << " |";
+    }
+
+    // Imprime el contenido de cada celda con un borde a su derecha
+    for (int col = 0; col < size.second; col++)
+    {
+      cout << squares[row][col] << "|"; // Asume que squares es accesible y contiene el contenido de cada celda
     }
     cout << endl;
+
+    // Imprime la línea divisoria entre filas
+    cout << "   +"; // Alinea con los índices de las columnas
+    for (int col = 0; col < size.second; col++)
+    {
+      cout << "--"; // Doble línea para cada columna
+    }
+    cout << "+" << endl; // Cierra la línea divisoria
   }
 }
 void GameBoard::getShoot(pair<int, int> shoot)

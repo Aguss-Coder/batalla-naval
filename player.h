@@ -20,17 +20,16 @@ protected:
 public:
   // Constructor
   Player();
-  Player(string, GameBoard, vector<WarShip>, pair<int, int>, bool);
+  Player(string, GameBoard, pair<int, int>, bool);
   // Setters
-  void setName();
+  void setName(string);
   void setBoard();
-  void setShips();
   void setShoot();
   void setTurn();
   // Getters
   string getName();
-  GameBoard getBoard();
-  vector<WarShip> getShips();
+  GameBoard &getBoard();
+  vector<WarShip> &getShips();
   pair<int, int> getShoot();
   bool getTurn();
   // Methods
