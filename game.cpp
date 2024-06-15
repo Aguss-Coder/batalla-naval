@@ -70,12 +70,10 @@ void Game::loadGame()
   }
 }
 
-void Game::humanGameplay()
+void Game::setHumanGameSettings(Human &player1, Human &Player2)
 {
   pair<int, int> boardSize;
   string name;
-  Human player1;
-  Human Player2;
 
   cout << "set the board size" << endl;
   cout << "Enter the number of rows: ";
@@ -99,23 +97,57 @@ void Game::humanGameplay()
   cin >> name;
   Player2.setName(name);
 
-  // settear la direccion de los barcos
+  // set ships
+
+  vector<WarShip> _ships;
+
+  _ships.push_back(WarShip(4, 'A'));
+
+  _ships.push_back(WarShip(3, 'B'));
+  _ships.push_back(WarShip(3, 'B'));
+
+  _ships.push_back(WarShip(2, 'C'));
+  _ships.push_back(WarShip(2, 'C'));
+  _ships.push_back(WarShip(2, 'C'));
+
+  _ships.push_back(WarShip(1, 'D'));
+  _ships.push_back(WarShip(1, 'D'));
+  _ships.push_back(WarShip(1, 'D'));
+  _ships.push_back(WarShip(1, 'D'));
+
+  player1.setShips(_ships);
+  Player2.setShips(_ships);
+
+  // settear la orientacion de los barcos
+
+  vector<WarShip> ships1 = player1.getShips();
+  vector<WarShip> ships2 = Player2.getShips();
 
   char orientation;
 
-  for (size_t i = 0; i < player1.getShips().size(); i++)
+  for (WarShip &ship : ships1)
   {
-    cout << player1.getShips()[i].getSymbol() << " orientation" << endl;
-    cout << player1.getName() << " enter the orientation of the ship " << player1.getShips()[i].getSymbol() << endl;
+    cout << player1.getName() << " enter the orientation of the ship " << ship.getSymbol() << endl;
     cout << "Enter the orientation (H for horizontal, V for vertical): ";
     cin >> orientation;
 
-    player1.getShips()[i].setOrientation(orientation);
+    ship.setOrientation(orientation);
+    cout << "orientation: " << ship.getOrientation() << "\n";
+  }
+
+  for (WarShip &ship : ships2)
+  {
+    cout << Player2.getName() << " enter the orientation of the ship " << ship.getSymbol() << endl;
+    cout << "Enter the orientation (H for horizontal, V for vertical): ";
+    cin >> orientation;
+
+    ship.setOrientation(orientation);
+    cout << "orientation: " << ship.getOrientation() << "\n";
   }
 
   // set coordinates
 
-  /* vector<pair<int, int>> coordinates;
+  vector<pair<int, int>> coordinates;
   int row, col;
 
   for (WarShip &ship : ships1)
@@ -139,6 +171,7 @@ void Game::humanGameplay()
   for (WarShip &ship : ships2)
   {
     cout << Player2.getName() << " enter the coordinates of the ship " << ship.getSymbol() << endl;
+    cout << ship.getSymbol() << "'s orientation is: " << ship.getOrientation() << endl;
 
     for (int i = 0; i < ship.getSize(); i++)
     {
@@ -160,6 +193,18 @@ void Game::humanGameplay()
 
   player1.getBoard().setSquares({}, ships1, size);
   Player2.getBoard().setSquares({}, ships2, size);
+}
+
+void Game::setBotGameSettings(Human &player1, Bot &bot)
+{
+}
+
+void Game::humanGameplay()
+{
+  Human player1;
+  Human Player2;
+
+  setHumanGameSettings(player1, Player2);
 
   // draw boards
 
@@ -169,11 +214,12 @@ void Game::humanGameplay()
 
   cout << Player2.getName() << " board:" << endl;
   Player2.getBoard().draw();
-  cout << endl; */
+  cout << endl;
 }
 
 void Game::botGameplay()
 {
   Human player1;
   Bot bot;
+  setBotGameSettings(player1, bot);
 }

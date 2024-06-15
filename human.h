@@ -1,3 +1,6 @@
+#ifndef HUMAN_H
+#define HUMAN_H
+
 #include "player.h"
 #include <iostream>
 
@@ -9,3 +12,5 @@ public:
   Human();
   void saveGame();
 };
+
+#endif

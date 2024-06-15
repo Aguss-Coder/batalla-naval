@@ -1,3 +1,6 @@
+#ifndef BOT_H
+#define BOT_H
+
 #include "player.h"
 #include <iostream>
 
@@ -9,3 +12,5 @@ public:
   Bot();
   void strategy();
 };
+
+#endif

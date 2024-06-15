@@ -15,24 +15,6 @@ Player::Player(string _name, GameBoard _board, pair<int, int> _shoot, bool _turn
   board = _board;
   shoot = _shoot;
   turn = _turn;
-
-  vector<WarShip> _ships(10);
-
-  _ships.push_back(WarShip(4, 'A'));
-
-  _ships.push_back(WarShip(3, 'B'));
-  _ships.push_back(WarShip(3, 'B'));
-
-  _ships.push_back(WarShip(2, 'C'));
-  _ships.push_back(WarShip(2, 'C'));
-  _ships.push_back(WarShip(2, 'C'));
-
-  _ships.push_back(WarShip(1, 'D'));
-  _ships.push_back(WarShip(1, 'D'));
-  _ships.push_back(WarShip(1, 'D'));
-  _ships.push_back(WarShip(1, 'D'));
-
-  ships = _ships;
 }
 
 // Setters
@@ -43,6 +25,10 @@ void Player::setName(string _name)
 void Player::setBoard()
 {
   board = GameBoard();
+}
+void Player::setShips(vector<WarShip> _ships)
+{
+  ships = _ships;
 }
 void Player::setShoot()
 {
