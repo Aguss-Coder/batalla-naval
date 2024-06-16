@@ -30,9 +30,9 @@ void Player::setShips(vector<WarShip> _ships)
 {
   ships = _ships;
 }
-void Player::setShoot()
+void Player::setShot(pair<int, int> _shoot)
 {
-  shoot = make_pair(0, 0);
+  shoot = _shoot;
 }
 void Player::setTurn()
 {

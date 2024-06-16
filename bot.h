@@ -10,7 +10,7 @@ class Bot : public Player
 {
 public:
   Bot();
-  void strategy();
+  pair<int, int> strategy();
 };
 
 #endif

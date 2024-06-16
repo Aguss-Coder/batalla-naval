@@ -25,7 +25,7 @@ public:
   void setName(string);
   void setBoard();
   void setShips(vector<WarShip>);
-  void setShoot();
+  void setShot(pair<int, int>);
   void setTurn();
   // Getters
   string getName();

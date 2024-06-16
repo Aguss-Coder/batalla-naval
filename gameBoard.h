@@ -32,7 +32,7 @@ public:
 
   // Methods
   void draw();
-  void getShoot(pair<int, int>);
+  bool receiveShot(pair<int, int>);
   bool canPlaceShip(pair<int, int>, pair<int, int>, char);
   void placeShip(pair<int, int>, pair<int, int>, char, char);
   bool checkVictory();

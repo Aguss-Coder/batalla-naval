@@ -18,7 +18,7 @@ Bot::Bot()
 
 // Methods
 
-void Bot::strategy()
+pair<int, int> Bot::strategy()
 {
   cout << "Bot is thinking..." << endl;
   srand(time(0));

@@ -35,7 +35,7 @@ public:
   char getSymbol() const;
   char getOrientation();
   // Methods
-  void takeShoot(pair<int, int>);
+  bool takeShot(pair<int, int>);
   bool isSunk();
 };
 

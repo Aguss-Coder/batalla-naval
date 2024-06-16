@@ -109,12 +109,18 @@ void GameBoard::draw()
     cout << "+" << endl; // Cierra la línea divisoria
   }
 }
-void GameBoard::getShoot(pair<int, int> shoot)
+bool GameBoard::receiveShot(pair<int, int> shot)
 {
   for (size_t i = 0; i < ships.size(); i++)
   {
-    ships[i].takeShoot(shoot);
+    if (ships[i].takeShot(shot))
+    {
+      squares[shot.first][shot.second] = 'X';
+      return true;
+    }
   }
+  squares[shot.first][shot.second] = 'O';
+  return false;
 }
 /**
  * Checks if a ship can be placed on the game board.

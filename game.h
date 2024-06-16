@@ -13,6 +13,7 @@ protected:
   string gameSaved;
 
 public:
+  void clearScreen();
   void loadGame();
   void newGame();
   void choosePlayer();

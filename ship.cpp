@@ -77,19 +77,25 @@ char WarShip::getOrientation()
 
 // Methods
 
-void WarShip::takeShoot(pair<int, int> shoot)
+/**
+ * Takes a shot at the ship and updates its state if the shot hits.
+ *
+ * @param shot The coordinates of the shot.
+ * @return True if the shot hits the ship, false otherwise.
+ */
+bool WarShip::takeShot(pair<int, int> shot)
 {
+    for (size_t i = 0; i < coordinates.size(); i++)
     {
-        for (size_t i = 0; i < coordinates.size(); i++)
+        if (coordinates[i] == shot)
         {
-            if (coordinates[i].first == shoot.first && coordinates[i].second == shoot.second)
-            {
-                damaged = true;
-                coordinates.erase(coordinates.begin() + i);
-                break;
-            }
+            coordinates.erase(coordinates.begin() + i);
+            damaged = true;
+            return true;
         }
     }
+
+    return false;
 }
 
 bool WarShip::isSunk()
