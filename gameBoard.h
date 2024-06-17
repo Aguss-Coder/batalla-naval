@@ -23,7 +23,7 @@ public:
   // Setters
   void setShips(vector<WarShip>);
   void setSize(pair<int, int>);
-  void setSquares(vector<vector<char>>, vector<WarShip>, pair<int, int>);
+  void setSquares(vector<WarShip>, pair<int, int>);
 
   // Getters
   vector<WarShip> getShips();

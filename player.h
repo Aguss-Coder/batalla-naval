@@ -14,7 +14,7 @@ protected:
   string name;
   GameBoard board;
   vector<WarShip> ships;
-  pair<int, int> shoot;
+  pair<int, int> shot;
   bool turn;
 
 public:
@@ -31,11 +31,11 @@ public:
   string getName();
   GameBoard &getBoard();
   vector<WarShip> &getShips();
-  pair<int, int> getShoot();
+  pair<int, int> getShot();
   bool getTurn();
   // Methods
   void showBoard();
-  pair<int, int> makeShoot(pair<int, int>);
+  bool makeShot();
   void changeTurn();
 };
 

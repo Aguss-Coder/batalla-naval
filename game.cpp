@@ -6,6 +6,8 @@
 #include <limits>
 #include <cstdlib>
 #include <ctime>
+#include <chrono>
+#include <thread>
 
 using namespace std;
 
@@ -202,12 +204,15 @@ void Game::setHumanGameSettings(Human &player1, Human &player2)
     coordinates.clear();
   }
 
+  player1.getBoard().setShips(ships1);
+  player2.getBoard().setShips(ships2);
+
   // set squares
 
   pair<int, int> size = player1.getBoard().getSize();
 
-  player1.getBoard().setSquares({}, ships1, size);
-  player2.getBoard().setSquares({}, ships2, size);
+  player1.getBoard().setSquares(ships1, size);
+  player2.getBoard().setSquares(ships2, size);
 
   clearScreen();
 }
@@ -261,6 +266,8 @@ void Game::setBotGameSettings(Human &player1, Bot &player2)
   vector<WarShip> ships1 = player1.getShips();
   vector<WarShip> ships2 = player2.getShips();
 
+  clearScreen();
+
   char orientation;
 
   for (WarShip &ship : ships1)
@@ -279,6 +286,8 @@ void Game::setBotGameSettings(Human &player1, Bot &player2)
     orientation = (rand() % 2) == 0 ? 'H' : 'V';
     ship.setOrientation(orientation);
   }
+
+  clearScreen();
 
   // set coordinates
 
@@ -327,12 +336,17 @@ void Game::setBotGameSettings(Human &player1, Bot &player2)
     coordinates.clear();
   }
 
+  player1.getBoard().setShips(ships1);
+  player2.getBoard().setShips(ships2);
+
   // set squares
 
   pair<int, int> size = player1.getBoard().getSize();
 
-  player1.getBoard().setSquares({}, ships1, size);
-  player2.getBoard().setSquares({}, ships2, size);
+  player1.getBoard().setSquares(ships1, size);
+  player2.getBoard().setSquares(ships2, size);
+
+  clearScreen();
 }
 
 void Game::humanGameplay()
@@ -350,16 +364,16 @@ void Game::humanGameplay()
   {
     // player 1 turn
 
-    player1.getBoard().draw();
+    player1.showBoard();
     cout << player1.getName() << " turn" << endl;
     cout << "Enter the row: ";
     cin >> row;
     cout << "Enter the column: ";
     cin >> col;
 
-    player1.setShot(make_pair(row, col));
+    player2.setShot(make_pair(row, col));
 
-    if (player2.getBoard().receiveShot(make_pair(row, col)))
+    if (player2.makeShot())
     {
       cout << "Hit!" << endl;
 
@@ -375,20 +389,22 @@ void Game::humanGameplay()
       cout << "Miss!" << endl;
     }
 
+    this_thread::sleep_for(chrono::seconds(5));
+
     clearScreen();
 
     // player 2 turn
 
-    player2.getBoard().draw();
+    player2.showBoard();
     cout << player2.getName() << " turn" << endl;
     cout << "Enter the row: ";
     cin >> row;
     cout << "Enter the column: ";
     cin >> col;
 
-    player2.setShot(make_pair(row, col));
+    player1.setShot(make_pair(row, col));
 
-    if (player1.getBoard().receiveShot(make_pair(row, col)))
+    if (player1.makeShot())
     {
       cout << "Hit!" << endl;
 
@@ -403,6 +419,8 @@ void Game::humanGameplay()
     {
       cout << "Miss!" << endl;
     }
+
+    this_thread::sleep_for(chrono::seconds(5));
 
     clearScreen();
 
@@ -451,6 +469,8 @@ void Game::botGameplay()
       cout << "Miss!" << endl;
     }
 
+    this_thread::sleep_for(chrono::seconds(5));
+
     clearScreen();
 
     // bot turn
@@ -474,6 +494,8 @@ void Game::botGameplay()
     {
       cout << "Miss!" << endl;
     }
+
+    this_thread::sleep_for(chrono::seconds(5));
 
     clearScreen();
 

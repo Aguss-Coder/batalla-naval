@@ -27,7 +27,7 @@ void GameBoard::setSize(pair<int, int> _size)
   size.first = _size.first;
   size.second = _size.second;
 }
-void GameBoard::setSquares(vector<vector<char>> _squares, vector<WarShip> _ships, pair<int, int> _size)
+void GameBoard::setSquares(vector<WarShip> _ships, pair<int, int> _size)
 {
   squares.resize(_size.first, vector<char>(_size.second, '~'));
 

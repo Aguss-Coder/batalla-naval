@@ -33,11 +33,11 @@ pair<int, int> Bot::strategy()
   } while (shooted.find(newPosition) != shooted.end());
 
   shooted.insert(newPosition);
-  shoot = newPosition;
+  shot = newPosition;
 
-  cout << "Bot shoots at " << shoot.first << ", " << shoot.second << endl;
+  cout << "Bot shoots at " << shot.first << ", " << shot.second << endl;
 
   changeTurn();
 
-  return;
+  return shot;
 }
