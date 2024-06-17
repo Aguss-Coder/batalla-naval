@@ -29,7 +29,7 @@ pair<int, int> Bot::strategy()
 
   do
   {
-    newPosition = make_pair(rand() % board.getSize().first, rand() % board.getSize().second);
+    newPosition = make_pair(rand() % playerBoard.getSize().first, rand() % playerBoard.getSize().second);
   } while (shooted.find(newPosition) != shooted.end());
 
   shooted.insert(newPosition);

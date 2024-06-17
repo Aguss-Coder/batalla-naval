@@ -59,8 +59,8 @@ vector<vector<char>> GameBoard::getSquares()
 
 // Methods
 /**
- * Draws the game board.
- * Prints the current state of the game board, including the row and column indices and the contents of each square.
+ * Draws the game playerBoard.
+ * Prints the current state of the game playerBoard, including the row and column indices and the contents of each square.
  */
 void GameBoard::draw()
 {
@@ -123,7 +123,7 @@ bool GameBoard::receiveShot(pair<int, int> shot)
   return false;
 }
 /**
- * Checks if a ship can be placed on the game board.
+ * Checks if a ship can be placed on the game playerBoard.
  *
  * @param coordinates The starting coordinates of the ship.
  * @param size The size of the ship.
@@ -163,14 +163,14 @@ bool GameBoard::canPlaceShip(pair<int, int> coordinates, pair<int, int> size, ch
   return true;
 }
 /**
- * @brief Places a ship on the game board.
+ * @brief Places a ship on the game playerBoard.
  *
- * This function is used to place a ship on the game board based on the given coordinates, size, orientation, and symbol.
+ * This function is used to place a ship on the game playerBoard based on the given coordinates, size, orientation, and symbol.
  *
  * @param coordinates The starting coordinates of the ship.
  * @param size The size of the ship (width and height).
  * @param orientation The orientation of the ship ('H' for horizontal, 'V' for vertical).
- * @param symbol The symbol representing the ship on the game board.
+ * @param symbol The symbol representing the ship on the game playerBoard.
  */
 void GameBoard::placeShip(pair<int, int> coordinates, pair<int, int> size, char orientation, char symbol)
 {

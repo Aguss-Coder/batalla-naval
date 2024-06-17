@@ -28,13 +28,13 @@ void Human::saveGame()
     file << "Player: " << name << endl;
     file << "Turn: " << turn << endl;
     file << "Board: " << endl;
-    file << "Size: " << board.getSize().first << "x" << board.getSize().second << endl;
+    file << "Size: " << playerBoard.getSize().first << "x" << playerBoard.getSize().second << endl;
     file << "Squares: " << endl;
-    for (size_t i = 0; i < board.getSquares().size(); i++)
+    for (size_t i = 0; i < playerBoard.getSquares().size(); i++)
     {
-      for (size_t j = 0; j < board.getSquares()[i].size(); j++)
+      for (size_t j = 0; j < playerBoard.getSquares()[i].size(); j++)
       {
-        file << board.getSquares()[i][j] << " ";
+        file << playerBoard.getSquares()[i][j] << " ";
       }
       file << endl;
     }

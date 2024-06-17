@@ -85,20 +85,24 @@ void Game::loadGame()
 
 void Game::setHumanGameSettings(Human &player1, Human &player2)
 {
-  pair<int, int> boardSize;
+  pair<int, int> playerBoardSize;
   string name;
 
-  cout << "set the board size" << endl;
+  cout << "set the playerBoard size" << endl;
   cout << "Enter the number of rows: ";
-  cin >> boardSize.first;
+  cin >> playerBoardSize.first;
   cout << "Enter the number of columns: ";
-  cin >> boardSize.second;
+  cin >> playerBoardSize.second;
 
-  player1.setBoard();
-  player2.setBoard();
+  player1.setPlayerBoard();
+  player1.setEnemyBoard();
+  player2.setPlayerBoard();
+  player2.setEnemyBoard();
 
-  player1.getBoard().setSize(boardSize);
-  player2.getBoard().setSize(boardSize);
+  player1.getPlayerBoard().setSize(playerBoardSize);
+  player1.getEnemyBoard().setSize(playerBoardSize);
+  player2.getPlayerBoard().setSize(playerBoardSize);
+  player2.getEnemyBoard().setSize(playerBoardSize);
 
   // set names
 
@@ -204,35 +208,37 @@ void Game::setHumanGameSettings(Human &player1, Human &player2)
     coordinates.clear();
   }
 
-  player1.getBoard().setShips(ships1);
-  player2.getBoard().setShips(ships2);
+  player1.getPlayerBoard().setShips(ships1);
+  player1.getEnemyBoard().setShips(ships1);
+  player2.getPlayerBoard().setShips(ships2);
+  player2.getEnemyBoard().setShips(ships2);
 
   // set squares
 
-  pair<int, int> size = player1.getBoard().getSize();
+  pair<int, int> size = player1.getPlayerBoard().getSize();
 
-  player1.getBoard().setSquares(ships1, size);
-  player2.getBoard().setSquares(ships2, size);
+  player1.getPlayerBoard().setSquares(ships1, size);
+  player2.getPlayerBoard().setSquares(ships2, size);
 
   clearScreen();
 }
 
 void Game::setBotGameSettings(Human &player1, Bot &player2)
 {
-  pair<int, int> boardSize;
+  pair<int, int> playerBoardSize;
   string name;
 
-  cout << "set the board size" << endl;
+  cout << "set the playerBoard size" << endl;
   cout << "Enter the number of rows: ";
-  cin >> boardSize.first;
+  cin >> playerBoardSize.first;
   cout << "Enter the number of columns: ";
-  cin >> boardSize.second;
+  cin >> playerBoardSize.second;
 
-  player1.setBoard();
-  player2.setBoard();
+  player1.setPlayerBoard();
+  player2.setPlayerBoard();
 
-  player1.getBoard().setSize(boardSize);
-  player2.getBoard().setSize(boardSize);
+  player1.getPlayerBoard().setSize(playerBoardSize);
+  player2.getPlayerBoard().setSize(playerBoardSize);
 
   // set names
 
@@ -314,8 +320,8 @@ void Game::setBotGameSettings(Human &player1, Bot &player2)
 
   for (WarShip &ship : ships2)
   {
-    row = rand() % boardSize.first;
-    col = rand() % boardSize.second;
+    row = rand() % playerBoardSize.first;
+    col = rand() % playerBoardSize.second;
 
     coordinates.push_back(make_pair(row, col));
     for (int i = 0; i < ship.getSize(); i++)
@@ -336,15 +342,15 @@ void Game::setBotGameSettings(Human &player1, Bot &player2)
     coordinates.clear();
   }
 
-  player1.getBoard().setShips(ships1);
-  player2.getBoard().setShips(ships2);
+  player1.getPlayerBoard().setShips(ships1);
+  player2.getPlayerBoard().setShips(ships2);
 
   // set squares
 
-  pair<int, int> size = player1.getBoard().getSize();
+  pair<int, int> size = player1.getPlayerBoard().getSize();
 
-  player1.getBoard().setSquares(ships1, size);
-  player2.getBoard().setSquares(ships2, size);
+  player1.getPlayerBoard().setSquares(ships1, size);
+  player2.getPlayerBoard().setSquares(ships2, size);
 
   clearScreen();
 }
@@ -364,7 +370,8 @@ void Game::humanGameplay()
   {
     // player 1 turn
 
-    player1.showBoard();
+    player1.showPlayerBoard();
+    player1.showEnemyBoard();
     cout << player1.getName() << " turn" << endl;
     cout << "Enter the row: ";
     cin >> row;
@@ -377,7 +384,7 @@ void Game::humanGameplay()
     {
       cout << "Hit!" << endl;
 
-      if (player2.getBoard().checkVictory())
+      if (player2.getPlayerBoard().checkVictory())
       {
         cout << player1.getName() << " wins!" << endl;
         gameOver = true;
@@ -395,7 +402,7 @@ void Game::humanGameplay()
 
     // player 2 turn
 
-    player2.showBoard();
+    player2.showPlayerBoard();
     cout << player2.getName() << " turn" << endl;
     cout << "Enter the row: ";
     cin >> row;
@@ -408,7 +415,7 @@ void Game::humanGameplay()
     {
       cout << "Hit!" << endl;
 
-      if (player1.getBoard().checkVictory())
+      if (player1.getPlayerBoard().checkVictory())
       {
         cout << player2.getName() << " wins!" << endl;
         gameOver = true;
@@ -444,7 +451,7 @@ void Game::botGameplay()
   {
     // player 1 turn
 
-    player1.getBoard().draw();
+    player1.getPlayerBoard().draw();
     cout << player1.getName() << " turn" << endl;
     cout << "Enter the row: ";
     cin >> row;
@@ -453,11 +460,11 @@ void Game::botGameplay()
 
     player1.setShot(make_pair(row, col));
 
-    if (bot.getBoard().receiveShot(make_pair(row, col)))
+    if (bot.getPlayerBoard().receiveShot(make_pair(row, col)))
     {
       cout << "Hit!" << endl;
 
-      if (bot.getBoard().checkVictory())
+      if (bot.getPlayerBoard().checkVictory())
       {
         cout << player1.getName() << " wins!" << endl;
         gameOver = true;
@@ -479,11 +486,11 @@ void Game::botGameplay()
     row = bot.strategy().first;
     col = bot.strategy().second;
 
-    if (player1.getBoard().receiveShot(make_pair(row, col)))
+    if (player1.getPlayerBoard().receiveShot(make_pair(row, col)))
     {
       cout << "Hit!" << endl;
 
-      if (player1.getBoard().checkVictory())
+      if (player1.getPlayerBoard().checkVictory())
       {
         cout << bot.getName() << " wins!" << endl;
         gameOver = true;
