@@ -13,47 +13,65 @@ Human::Human()
 }
 
 // Methods
-void Human::saveGame()
+void Human::saveGame(string fileName)
 {
   cout << "Saving game..." << endl;
   try
   {
-    ofstream file("savedGame.txt");
+    ofstream file(fileName, ios::out | ios::trunc);
 
     if (!file.is_open())
     {
       throw runtime_error("Error opening file");
     }
 
-    file << "Player: " << name << endl;
-    file << "Turn: " << turn << endl;
-    file << "Board: " << endl;
-    file << "Size: " << playerBoard.getSize().first << "x" << playerBoard.getSize().second << endl;
-    file << "Squares: " << endl;
-    for (size_t i = 0; i < playerBoard.getSquares().size(); i++)
+    // Save logic
+    string name = getName();
+    bool turn = getTurn();
+    GameBoard playerBoard = getPlayerBoard();
+    GameBoard opponentBoard = getOpponentBoard();
+    vector<WarShip> ships = getShips();
+
+    file << name << endl;
+    file << (turn ? "true" : "false") << endl;
+
+    pair<int, int> size = playerBoard.getSize();
+    file << size.first << " " << size.second << endl;
+
+    vector<vector<char>> squares = playerBoard.getSquares();
+    for (int i = 0; i < size.first; i++)
     {
-      for (size_t j = 0; j < playerBoard.getSquares()[i].size(); j++)
+      for (int j = 0; j < size.second; j++)
       {
-        file << playerBoard.getSquares()[i][j] << " ";
+        file << squares[i][j] << " ";
       }
       file << endl;
     }
-    file << "Ships: " << endl;
-    for (size_t i = 0; i < ships.size(); i++)
+
+    size = opponentBoard.getSize();
+    file << size.first << " " << size.second << endl;
+
+    squares = opponentBoard.getSquares();
+    for (int i = 0; i < size.first; i++)
     {
-      file << "Ship " << i + 1 << ": " << endl;
-      file << "Size: " << ships[i].getSize() << endl;
-      file << "Coordinates: ";
-      for (size_t j = 0; j < ships[i].getCoordinates().size(); j++)
+      for (int j = 0; j < size.second; j++)
       {
-        file << "(" << ships[i].getCoordinates()[j].first << ", " << ships[i].getCoordinates()[j].second << ") ";
+        file << squares[i][j] << " ";
       }
       file << endl;
-      file << "Sunk: " << ships[i].getSunk() << endl;
-      file << "Damaged: " << ships[i].getDamaged() << endl;
-      file << "Symbol: " << ships[i].getSymbol() << endl;
-      file << "Orientation: " << ships[i].getOrientation() << endl;
     }
+
+    file << ships.size() << endl;
+    for (const auto &ship : ships)
+    {
+      file << ship.getSize() << " " << ship.getSymbol() << " " << ship.getOrientation() << " " << ship.getCoordinates().size() << endl;
+      for (const auto &coordinate : ship.getCoordinates())
+      {
+        file << "(" << coordinate.first << ", " << coordinate.second << ") ";
+      }
+      file << endl;
+    }
+
     file.close();
     cout << "Game saved successfully" << endl;
   }

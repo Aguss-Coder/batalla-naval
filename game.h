@@ -14,7 +14,7 @@ protected:
 
 public:
   void clearScreen();
-  void loadGame();
+  void loadGame(string);
   void newGame();
   void choosePlayer();
   void setHumanGameSettings(Human &, Human &);

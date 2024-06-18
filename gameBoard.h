@@ -11,7 +11,6 @@ class GameBoard
 {
 protected:
   vector<WarShip> ships;
-  vector<pair<int, int>> waterPosition;
   pair<int, int> size;
   vector<vector<char>> squares;
 
@@ -32,6 +31,7 @@ public:
 
   // Methods
   void draw();
+  bool checkCoordinates(pair<int, int>);
   bool receiveShot(pair<int, int>);
   bool canPlaceShip(pair<int, int>, pair<int, int>, char);
   void placeShip(pair<int, int>, pair<int, int>, char, char);

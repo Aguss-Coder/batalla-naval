@@ -1,6 +1,7 @@
 #include "gameBoard.h"
 #include <iostream>
 #include <vector>
+#include <iomanip>
 
 using namespace std;
 
@@ -64,16 +65,18 @@ vector<vector<char>> GameBoard::getSquares()
  */
 void GameBoard::draw()
 {
-  // Imprime el índice de las columnas con un espacio adicional para alinear con los bordes de las celdas
-  cout << "    "; // Espacios adicionales para alinear los índices de las columnas
+  int maxDigits = to_string(max(size.first, size.second)).length();
+
+  // Imprime el índice de las columnas con espaciado adicional para alinear con los bordes de las celdas
+  cout << setw(maxDigits + 2) << ""; // Espacios adicionales para alinear los índices de las columnas
   for (int col = 0; col < size.second; col++)
   {
-    cout << col << " ";
+    cout << setw(2) << col; // Asegura que el índice de la columna tenga el ancho correcto
   }
   cout << endl;
 
   // Imprime la línea superior del tablero
-  cout << "   +"; // Espacios adicionales para alinear con los índices de las columnas
+  cout << setw(maxDigits + 2) << "+"; // Espacios adicionales para alinear con los índices de las columnas
   for (int col = 0; col < size.second; col++)
   {
     cout << "--"; // Doble línea para cada columna
@@ -84,14 +87,7 @@ void GameBoard::draw()
   for (int row = 0; row < size.first; row++)
   {
     // Asegura que el índice de las filas esté alineado correctamente
-    if (row < 10)
-    {
-      cout << " " << row << " |"; // Espacio adicional para filas de un solo dígito
-    }
-    else
-    {
-      cout << row << " |";
-    }
+    cout << setw(maxDigits) << row << " |"; // Espacio adicional para filas de un solo dígito
 
     // Imprime el contenido de cada celda con un borde a su derecha
     for (int col = 0; col < size.second; col++)
@@ -101,7 +97,7 @@ void GameBoard::draw()
     cout << endl;
 
     // Imprime la línea divisoria entre filas
-    cout << "   +"; // Alinea con los índices de las columnas
+    cout << setw(maxDigits + 2) << "+"; // Alinea con los índices de las columnas
     for (int col = 0; col < size.second; col++)
     {
       cout << "--"; // Doble línea para cada columna
@@ -109,6 +105,16 @@ void GameBoard::draw()
     cout << "+" << endl; // Cierra la línea divisoria
   }
 }
+
+bool GameBoard::checkCoordinates(pair<int, int> coordinates)
+{
+  if (coordinates.first < 0 || coordinates.first >= size.first || coordinates.second < 0 || coordinates.second >= size.second)
+  {
+    return false;
+  }
+  return true;
+}
+
 bool GameBoard::receiveShot(pair<int, int> shot)
 {
   for (size_t i = 0; i < ships.size(); i++)

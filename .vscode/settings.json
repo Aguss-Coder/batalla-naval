@@ -49,7 +49,14 @@
     "typeinfo": "cpp",
     "ctime": "cpp",
     "set": "cpp",
-    "fstream": "cpp"
+    "fstream": "cpp",
+    "iomanip": "cpp",
+    "chrono": "cpp",
+    "ratio": "cpp",
+    "semaphore": "cpp",
+    "sstream": "cpp",
+    "stop_token": "cpp",
+    "thread": "cpp"
   },
   "C_Cpp.default.compilerPath": "/usr/bin/g++"
 }

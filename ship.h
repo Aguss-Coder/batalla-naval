@@ -28,12 +28,12 @@ public:
   void setSymbol(char);
   void setOrientation(char);
   // Getters
-  int getSize();
+  int getSize() const;
   vector<pair<int, int>> getCoordinates() const;
   bool getSunk();
   bool getDamaged();
   char getSymbol() const;
-  char getOrientation();
+  char getOrientation() const;
   // Methods
   bool takeShot(pair<int, int>);
   bool isSunk();

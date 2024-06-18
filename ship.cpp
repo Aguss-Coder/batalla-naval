@@ -50,7 +50,7 @@ void WarShip::setOrientation(char orientation_)
     orientation = orientation_;
 }
 // getters
-int WarShip::getSize()
+int WarShip::getSize() const
 {
     return size;
 }
@@ -70,7 +70,7 @@ char WarShip::getSymbol() const
 {
     return symbol;
 }
-char WarShip::getOrientation()
+char WarShip::getOrientation() const
 {
     return orientation;
 }

@@ -13,7 +13,7 @@ class Player
 protected:
   string name;
   GameBoard playerBoard;
-  GameBoard enemyBoard;
+  GameBoard opponentBoard;
   vector<WarShip> ships;
   pair<int, int> shot;
   bool turn;
@@ -25,14 +25,14 @@ public:
   // Setters
   void setName(string);
   void setPlayerBoard();
-  void setEnemyBoard();
+  void setOpponentBoard();
   void setShips(vector<WarShip>);
   void setShot(pair<int, int>);
   void setTurn();
   // Getters
   string getName();
   GameBoard &getPlayerBoard();
-  GameBoard &getEnemyBoard();
+  GameBoard &getOpponentBoard();
   vector<WarShip> &getShips();
   pair<int, int> getShot();
   bool getTurn();
@@ -41,6 +41,7 @@ public:
   void showEnemyBoard();
   bool makeShot();
   void changeTurn();
+  void placeShips(vector<WarShip> &);
 };
 
 #endif

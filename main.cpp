@@ -19,7 +19,8 @@ int main(int argc, char const *argv[])
   }
   else if (choice == 2)
   {
-    game.loadGame();
+    game.loadGame("player1_savedGame.txt");
+    game.loadGame("player2_savedGame.txt");
   }
   else
   {

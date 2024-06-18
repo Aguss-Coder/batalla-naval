@@ -10,7 +10,7 @@ class Human : public Player
 {
 public:
   Human();
-  void saveGame();
+  void saveGame(string);
 };
 
 #endif
