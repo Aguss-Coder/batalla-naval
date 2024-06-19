@@ -183,7 +183,8 @@ void Game::readGameData(Human &player1, Human &player2, Bot &bot)
       int row, col;
       for (int i = 0; i < ship.getSize(); i++)
       {
-        file >> row >> col;
+        file >> row;
+        file >> col;
         coordinates.push_back(make_pair(row, col));
       }
       ship.setCoordinates(coordinates);

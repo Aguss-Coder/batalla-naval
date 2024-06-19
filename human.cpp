@@ -86,7 +86,7 @@ void Human::saveGameData(Human player1, Human player2, Bot bot)
       vector<pair<int, int>> coordinates = ship.getCoordinates();
       for (pair<int, int> coord : coordinates)
       {
-        file << coord.first << " " << coord.second << " ";
+        file << coord.first << " " << coord.second << endl;
       }
       file << endl;
     }
@@ -97,7 +97,7 @@ void Human::saveGameData(Human player1, Human player2, Bot bot)
       vector<pair<int, int>> coordinates = ship.getCoordinates();
       for (pair<int, int> coord : coordinates)
       {
-        file << coord.first << " " << coord.second << " ";
+        file << coord.first << " " << coord.second << endl;
       }
       file << endl;
     }
@@ -108,7 +108,7 @@ void Human::saveGameData(Human player1, Human player2, Bot bot)
       vector<pair<int, int>> coordinates = ship.getCoordinates();
       for (pair<int, int> coord : coordinates)
       {
-        file << coord.first << " " << coord.second << " ";
+        file << coord.first << " " << coord.second << endl;
       }
       file << endl;
     }
