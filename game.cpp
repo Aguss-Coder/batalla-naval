@@ -91,181 +91,168 @@ void Game::readGameData(Human &player1, Human &player2, Bot &bot)
       throw runtime_error("Error opening file");
     }
 
-    string name;
-    bool turn;
-    pair<int, int> size;
-    vector<vector<char>> squares;
-    vector<WarShip> ships;
-    bool isPlaying;
+    // Read logic
 
-    // Load logic
-    file >> isPlaying;
-    player1.setIsPlaying(isPlaying);
+    // read isPlaying
+    bool isPlayer1Playing;
+    file >> isPlayer1Playing;
+    player1.setIsPlaying(isPlayer1Playing);
 
-    file >> isPlaying;
-    player2.setIsPlaying(isPlaying);
+    bool isPlayer2Playing;
+    file >> isPlayer2Playing;
+    player2.setIsPlaying(isPlayer2Playing);
 
-    file >> isPlaying;
-    bot.setIsPlaying(isPlaying);
+    bool isBotPlaying;
+    file >> isBotPlaying;
+    bot.setIsPlaying(isBotPlaying);
 
-    file >> name;
-    player1.setName(name);
-    file >> name;
-    player2.setName(name);
-    file >> name;
-    bot.setName(name);
+    // read board size
+    pair<int, int> boardSize;
+    file >> boardSize.first >> boardSize.second;
+    player1.getPlayerBoard().setSize(boardSize);
+    player2.getPlayerBoard().setSize(boardSize);
+    bot.getPlayerBoard().setSize(boardSize);
 
-    file >> turn;
-    player1.setTurn(turn);
-    file >> turn;
-    player2.setTurn(turn);
-    file >> turn;
-    bot.setTurn(turn);
+    // read player names
+    string player1Name;
+    file >> player1Name;
+    player1.setName(player1Name);
 
-    file >> size.first >> size.second;
-    player1.getPlayerBoard().setSize(size);
+    string player2Name;
+    file >> player2Name;
+    player2.setName(player2Name);
 
-    file >> size.first >> size.second;
-    player2.getPlayerBoard().setSize(size);
+    string botName;
+    file >> botName;
+    bot.setName(botName);
 
-    file >> size.first >> size.second;
-    bot.getPlayerBoard().setSize(size);
+    // set ships
 
-    file >> size.first >> size.second;
-    player1.getOpponentBoard().setSize(size);
+    vector<WarShip> _ships;
 
-    file >> size.first >> size.second;
-    player2.getOpponentBoard().setSize(size);
+    _ships.push_back(WarShip(4, 'A'));
 
-    file >> size.first >> size.second;
-    bot.getOpponentBoard().setSize(size);
+    _ships.push_back(WarShip(3, 'B'));
+    _ships.push_back(WarShip(3, 'B'));
 
-    // player1 ships
+    _ships.push_back(WarShip(2, 'C'));
+    _ships.push_back(WarShip(2, 'C'));
+    _ships.push_back(WarShip(2, 'C'));
 
-    int shipSize;
-    char shipSymbol;
+    _ships.push_back(WarShip(1, 'D'));
+    _ships.push_back(WarShip(1, 'D'));
+    _ships.push_back(WarShip(1, 'D'));
+
+    player1.setShips(_ships);
+    player2.setShips(_ships);
+    bot.setShips(_ships);
+
+    // read ships orientation
+
+    // player 1
+    vector<WarShip> player1Ships = player1.getShips();
     char orientation;
-    vector<pair<int, int>> coordinates;
-
-    int shipsSize;
-    file >> shipsSize;
-
-    for (int i = 0; i < shipsSize; i++)
+    for (size_t i = 0; i < player1Ships.size(); i++)
     {
-      file >> shipSize >> shipSymbol >> orientation;
-      WarShip ship(shipSize, shipSymbol);
-      ship.setOrientation(orientation);
+      file >> orientation;
+      player1Ships[i].setOrientation(orientation);
+    }
 
-      for (int j = 0; j < shipSize; j++)
+    // player 2
+    vector<WarShip> player2Ships = player2.getShips();
+    for (size_t i = 0; i < player2Ships.size(); i++)
+    {
+      file >> orientation;
+      player2Ships[i].setOrientation(orientation);
+    }
+
+    // bot
+    vector<WarShip> botShips = bot.getShips();
+    for (size_t i = 0; i < botShips.size(); i++)
+    {
+      file >> orientation;
+      botShips[i].setOrientation(orientation);
+    }
+
+    // read ships coordinates
+
+    // player 1
+    for (WarShip &ship : player1Ships)
+    {
+      vector<pair<int, int>> coordinates;
+      int row, col;
+      for (int i = 0; i < ship.getSize(); i++)
       {
-        int row, col;
         file >> row >> col;
         coordinates.push_back(make_pair(row, col));
       }
-
       ship.setCoordinates(coordinates);
-      ships.push_back(ship);
-      coordinates.clear();
     }
 
-    player1.getPlayerBoard().setShips(ships);
-    player1.getOpponentBoard().setShips(ships);
-
-    // player2 ships
-
-    ships.clear();
-    file >> shipsSize;
-
-    for (int i = 0; i < shipsSize; i++)
+    // player 2
+    for (WarShip &ship : player2Ships)
     {
-      file >> shipSize >> shipSymbol >> orientation;
-      WarShip ship(shipSize, shipSymbol);
-      ship.setOrientation(orientation);
-
-      for (int j = 0; j < shipSize; j++)
+      vector<pair<int, int>> coordinates;
+      int row, col;
+      for (int i = 0; i < ship.getSize(); i++)
       {
-        int row, col;
         file >> row >> col;
         coordinates.push_back(make_pair(row, col));
       }
-
       ship.setCoordinates(coordinates);
-      ships.push_back(ship);
-      coordinates.clear();
     }
 
-    player2.getPlayerBoard().setShips(ships);
-    player2.getOpponentBoard().setShips(ships);
-
-    // bot ships
-
-    ships.clear();
-    file >> shipsSize;
-
-    for (int i = 0; i < shipsSize; i++)
+    // bot
+    for (WarShip &ship : botShips)
     {
-      file >> shipSize >> shipSymbol >> orientation;
-      WarShip ship(shipSize, shipSymbol);
-      ship.setOrientation(orientation);
-
-      for (int j = 0; j < shipSize; j++)
+      vector<pair<int, int>> coordinates;
+      int row, col;
+      for (int i = 0; i < ship.getSize(); i++)
       {
-        int row, col;
         file >> row >> col;
         coordinates.push_back(make_pair(row, col));
       }
-
       ship.setCoordinates(coordinates);
-      ships.push_back(ship);
-      coordinates.clear();
     }
 
-    bot.setShips(ships);
+    player1.getPlayerBoard().setShips(player1Ships);
+    player2.getPlayerBoard().setShips(player2Ships);
+    bot.getPlayerBoard().setShips(botShips);
 
-    // player 1 squares
+    // set squares
 
-    file >> size.first >> size.second;
-    squares.resize(size.first, vector<char>(size.second));
-    for (int i = 0; i < size.first; i++)
+    pair<int, int> size = player1.getPlayerBoard().getSize();
+
+    player1.getPlayerBoard().setSquares(player1Ships, size);
+    player2.getPlayerBoard().setSquares(player2Ships, size);
+    bot.getPlayerBoard().setSquares(botShips, size);
+
+    // read coordinates shoted
+
+    // player 1
+    vector<pair<int, int>> coordinatesShoted;
+    int row, col;
+    while (file >> row >> col)
     {
-      for (int j = 0; j < size.second; j++)
-      {
-        file >> squares[i][j];
-      }
+      coordinatesShoted.push_back(make_pair(row, col));
     }
+    player1.setCoordinatesShoted(coordinatesShoted);
 
-    player1.getPlayerBoard().setSquares(ships, size);
-    player1.getOpponentBoard().setSquares(ships, size);
-
-    // player 2 squares
-
-    file >> size.first >> size.second;
-    squares.resize(size.first, vector<char>(size.second));
-    for (int i = 0; i < size.first; i++)
+    // player 2
+    coordinatesShoted.clear();
+    while (file >> row >> col)
     {
-      for (int j = 0; j < size.second; j++)
-      {
-        file >> squares[i][j];
-      }
+      coordinatesShoted.push_back(make_pair(row, col));
     }
+    player2.setCoordinatesShoted(coordinatesShoted);
 
-    player2.getPlayerBoard().setSquares(ships, size);
-    player2.getOpponentBoard().setSquares(ships, size);
-
-    // bot squares
-
-    file >> size.first >> size.second;
-    squares.resize(size.first, vector<char>(size.second));
-    for (int i = 0; i < size.first; i++)
+    // bot
+    coordinatesShoted.clear();
+    while (file >> row >> col)
     {
-      for (int j = 0; j < size.second; j++)
-      {
-        file >> squares[i][j];
-      }
+      coordinatesShoted.push_back(make_pair(row, col));
     }
-
-    bot.getPlayerBoard().setSquares(ships, size);
-    bot.getOpponentBoard().setSquares(ships, size);
+    bot.setCoordinatesShoted(coordinatesShoted);
 
     file.close();
     cout << "Game loaded successfully" << endl;
@@ -309,14 +296,10 @@ void Game::setHumanGameSettings(Human &player1, Human &player2)
   }
 
   player1.setPlayerBoard();
-  player1.setOpponentBoard();
   player2.setPlayerBoard();
-  player2.setOpponentBoard();
 
   player1.getPlayerBoard().setSize(playerBoardSize);
-  player1.getOpponentBoard().setSize(playerBoardSize);
   player2.getPlayerBoard().setSize(playerBoardSize);
-  player2.getOpponentBoard().setSize(playerBoardSize);
 
   // set names
 
@@ -401,32 +384,49 @@ void Game::setHumanGameSettings(Human &player1, Human &player2)
   player2.placeShips(ships2);
 
   player1.getPlayerBoard().setShips(ships1);
-  player2.getOpponentBoard().setShips(ships1);
   player2.getPlayerBoard().setShips(ships2);
-  player1.getOpponentBoard().setShips(ships2);
 
   // set squares
 
   pair<int, int> size = player1.getPlayerBoard().getSize();
 
   player1.getPlayerBoard().setSquares(ships1, size);
-  player1.getOpponentBoard().setSquares(ships1, size);
   player2.getPlayerBoard().setSquares(ships2, size);
-  player2.getOpponentBoard().setSquares(ships2, size);
 
   clearScreen();
 }
 
 void Game::setBotGameSettings(Human &player1, Bot &player2)
 {
+  player1.setIsPlaying(true);
+  player2.setIsPlaying(true);
+
   pair<int, int> playerBoardSize;
   string name;
 
-  cout << "set the playerBoard size" << endl;
-  cout << "Enter the number of rows: ";
-  cin >> playerBoardSize.first;
-  cout << "Enter the number of columns: ";
-  cin >> playerBoardSize.second;
+  bool validInput = false;
+
+  while (!validInput)
+  {
+    pair<string, string> boardSizeInput;
+
+    cout << "set the playerBoard size" << endl;
+    cout << "Enter the number of rows: ";
+    cin >> boardSizeInput.first;
+    cout << "Enter the number of columns: ";
+    cin >> boardSizeInput.second;
+
+    try
+    {
+      playerBoardSize.first = stoi(boardSizeInput.first);
+      playerBoardSize.second = stoi(boardSizeInput.second);
+      validInput = true;
+    }
+    catch (const exception &e)
+    {
+      cerr << "Invalid input. Please enter a number." << '\n';
+    }
+  }
 
   player1.setPlayerBoard();
   player2.setPlayerBoard();
@@ -472,12 +472,21 @@ void Game::setBotGameSettings(Human &player1, Bot &player2)
 
   for (WarShip &ship : ships1)
   {
+    if (ship.getSize() == 1)
+    {
+      ship.setOrientation('H');
+      continue;
+    }
+
     cout << player1.getName() << " enter the orientation of the ship " << ship.getSymbol() << endl;
     cout << "Enter the orientation (H for horizontal, V for vertical): ";
     cin >> orientation;
+    orientation = toupper(orientation);
 
     ship.setOrientation(orientation);
   }
+
+  clearScreen();
 
   // set random orientation for bot ships
   srand(time(0));
@@ -491,26 +500,10 @@ void Game::setBotGameSettings(Human &player1, Bot &player2)
 
   // set coordinates
 
+  player1.placeShips(ships1);
+
   vector<pair<int, int>> coordinates;
   int row, col;
-
-  for (WarShip &ship : ships1)
-  {
-    cout << player1.getName() << " enter the coordinates of the ship " << ship.getSymbol() << endl;
-
-    for (int i = 0; i < ship.getSize(); i++)
-    {
-      cout << "Enter the row: ";
-      cin >> row;
-      cout << "Enter the column: ";
-      cin >> col;
-
-      coordinates.push_back(make_pair(row, col));
-    }
-
-    ship.setCoordinates(coordinates);
-    coordinates.clear();
-  }
 
   for (WarShip &ship : ships2)
   {
@@ -535,8 +528,6 @@ void Game::setBotGameSettings(Human &player1, Bot &player2)
     ship.setCoordinates(coordinates);
     coordinates.clear();
   }
-
-  player1.getPlayerBoard().setShips(ships1);
   player2.getPlayerBoard().setShips(ships2);
 
   // set squares
@@ -557,6 +548,8 @@ void Game::humanGameplay(Human &player1, Human &player2)
   bool gameOver = false;
   string rowInput, colInput;
   int row, col;
+  bool hitPlayer1 = false;
+  bool hitPlayer2 = false;
 
   while (!gameOver)
   {
@@ -601,8 +594,20 @@ void Game::humanGameplay(Human &player1, Human &player2)
 
     // player 1 turn
 
+    cout << player1.getName() << " turn" << endl;
     player1.showPlayerBoard();
-    player1.showOpponentBoard();
+
+    if (player1.getCoordinatesShoted().size() > 0)
+    {
+      cout << "You attacked this coordinates: ";
+
+      for (pair<int, int> &coord : player1.getCoordinatesShoted())
+      {
+        cout << "(" << coord.first << ", " << coord.second << ") " << (hitPlayer1 ? "Hit!" : "Miss!");
+      }
+
+      cout << endl;
+    }
 
     bool validShot = false;
 
@@ -610,7 +615,6 @@ void Game::humanGameplay(Human &player1, Human &player2)
     {
       try
       {
-        cout << player1.getName() << " turn" << endl;
         cout << "Enter the row: ";
         cin >> rowInput;
         cout << "Enter the column: ";
@@ -626,6 +630,10 @@ void Game::humanGameplay(Human &player1, Human &player2)
       }
     }
 
+    cout << endl;
+
+    player1.getCoordinatesShoted().push_back(make_pair(row, col));
+
     player2.setShot(make_pair(row, col));
 
     if (player2.makeShot())
@@ -638,25 +646,55 @@ void Game::humanGameplay(Human &player1, Human &player2)
         gameOver = true;
         break;
       }
+      hitPlayer1 = true;
     }
     else
     {
       cout << "Miss!" << endl;
+      hitPlayer1 = false;
     }
 
-    this_thread::sleep_for(chrono::seconds(5));
+    this_thread::sleep_for(chrono::seconds(1));
 
     clearScreen();
 
     // player 2 turn
 
-    player2.showPlayerBoard();
-    player2.showOpponentBoard();
     cout << player2.getName() << " turn" << endl;
-    cout << "Enter the row: ";
-    cin >> row;
-    cout << "Enter the column: ";
-    cin >> col;
+    player2.showPlayerBoard();
+
+    if (player1.getCoordinatesShoted().size() > 0)
+    {
+      cout << "You attacked this coordinates: ";
+
+      for (pair<int, int> &coord : player2.getCoordinatesShoted())
+      {
+        cout << "(" << coord.first << ", " << coord.second << ") " << (hitPlayer2 ? "Hit!" : "Miss!");
+      }
+      cout << endl;
+    }
+
+    validShot = false;
+    while (!validShot)
+    {
+      try
+      {
+        cout << "Enter the row: ";
+        cin >> rowInput;
+        cout << "Enter the column: ";
+        cin >> colInput;
+
+        row = stoi(rowInput);
+        col = stoi(colInput);
+        validShot = true;
+      }
+      catch (const std::exception &e)
+      {
+        std::cerr << "Invalid input. Please enter a number." << '\n';
+      }
+    }
+
+    player2.getCoordinatesShoted().push_back(make_pair(row, col));
 
     player1.setShot(make_pair(row, col));
 
@@ -670,13 +708,15 @@ void Game::humanGameplay(Human &player1, Human &player2)
         gameOver = true;
         break;
       }
+      hitPlayer2 = true;
     }
     else
     {
       cout << "Miss!" << endl;
+      hitPlayer2 = false;
     }
 
-    this_thread::sleep_for(chrono::seconds(5));
+    this_thread::sleep_for(chrono::seconds(1));
 
     clearScreen();
 
@@ -686,23 +726,98 @@ void Game::humanGameplay(Human &player1, Human &player2)
 
 void Game::botGameplay(Human &player1, Bot &bot)
 {
-  // game loop
+  Human player2;
 
+  // game loop
   bool gameOver = false;
+  string rowInput, colInput;
   int row, col;
+  bool hitPlayer1 = false;
 
   while (!gameOver)
   {
+    int choice;
+
+    do
+    {
+      cout << "What do you want to do?" << endl;
+      cout << "1. Save game" << endl;
+      cout << "2. Continue game" << endl;
+      cout << "3. Exit game" << endl;
+
+      cin >> choice;
+
+      // Verifica si la entrada es inválida
+      if (cin.fail())
+      {
+        cin.clear();                                         // Limpia el estado de error de cin
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Descarta la entrada hasta el próximo salto de línea
+        choice = 0;                                          // Establece choice a un valor inválido para continuar el bucle
+        cout << "Please enter a valid option (1, 2, or 3)." << endl;
+      }
+      else if (choice < 1 || choice > 3)
+      {
+        cout << "Please enter a valid option (1, 2, or 3)." << endl;
+      }
+
+    } while (choice < 1 || choice > 3);
+
+    switch (choice)
+    {
+    case 1:
+      player1.saveGameData(player1, player2, bot);
+      cout << "Game saved." << endl;
+      break;
+    case 3:
+      gameOver = true;
+      cout << "Exiting game." << endl;
+      exit(0);
+      break;
+    }
+
     // player 1 turn
 
-    player1.getPlayerBoard().draw();
     cout << player1.getName() << " turn" << endl;
-    cout << "Enter the row: ";
-    cin >> row;
-    cout << "Enter the column: ";
-    cin >> col;
+    player1.showPlayerBoard();
 
-    player1.setShot(make_pair(row, col));
+    if (player1.getCoordinatesShoted().size() > 0)
+    {
+      cout << "You attacked this coordinates: ";
+
+      for (pair<int, int> &coord : player1.getCoordinatesShoted())
+      {
+        cout << "(" << coord.first << ", " << coord.second << ") " << (hitPlayer1 ? "Hit!" : "Miss!");
+      }
+
+      cout << endl;
+    }
+
+    bool validShot = false;
+
+    while (!validShot)
+    {
+      try
+      {
+        cout << "Enter the row: ";
+        cin >> rowInput;
+        cout << "Enter the column: ";
+        cin >> colInput;
+
+        row = stoi(rowInput);
+        col = stoi(colInput);
+        validShot = true;
+      }
+      catch (const std::exception &e)
+      {
+        std::cerr << "Invalid input. Please enter a number." << '\n';
+      }
+    }
+
+    cout << endl;
+
+    player1.getCoordinatesShoted().push_back(make_pair(row, col));
+
+    bot.setShot(make_pair(row, col));
 
     if (bot.getPlayerBoard().receiveShot(make_pair(row, col)))
     {
@@ -714,13 +829,15 @@ void Game::botGameplay(Human &player1, Bot &bot)
         gameOver = true;
         break;
       }
+      hitPlayer1 = true;
     }
     else
     {
       cout << "Miss!" << endl;
+      hitPlayer1 = false;
     }
 
-    this_thread::sleep_for(chrono::seconds(5));
+    this_thread::sleep_for(chrono::seconds(1));
 
     clearScreen();
 
@@ -746,7 +863,7 @@ void Game::botGameplay(Human &player1, Bot &bot)
       cout << "Miss!" << endl;
     }
 
-    this_thread::sleep_for(chrono::seconds(5));
+    this_thread::sleep_for(chrono::seconds(1));
 
     clearScreen();
 

@@ -33,3 +33,5 @@ int main(int argc, char const *argv[])
 
   return 0;
 }
+
+// g++ -Wall bot.cpp game.cpp gameBoard.cpp human.cpp main.cpp player.cpp ship.cpp -o battleShip.exe

@@ -28,9 +28,9 @@ void Player::setPlayerBoard()
 {
   playerBoard = GameBoard();
 }
-void Player::setOpponentBoard()
+void Player::setCoordinatesShoted(vector<pair<int, int>> _coordinatesShoted)
 {
-  opponentBoard = GameBoard();
+  coordinatesShoted = _coordinatesShoted;
 }
 void Player::setShips(vector<WarShip> _ships)
 {
@@ -58,9 +58,9 @@ GameBoard &Player::getPlayerBoard()
 {
   return playerBoard;
 }
-GameBoard &Player::getOpponentBoard()
+vector<pair<int, int>> &Player::getCoordinatesShoted()
 {
-  return opponentBoard;
+  return coordinatesShoted;
 }
 vector<WarShip> &Player::getShips()
 {
@@ -85,14 +85,9 @@ void Player::showPlayerBoard()
   playerBoard.draw();
 }
 
-void Player::showOpponentBoard()
-{
-  opponentBoard.draw();
-}
-
 bool Player::makeShot()
 {
-  return getOpponentBoard().receiveShot(shot);
+  return getPlayerBoard().receiveShot(shot);
 }
 
 void Player::changeTurn()
@@ -110,11 +105,30 @@ void Player::placeShips(vector<WarShip> &ships)
     bool validPlacement = false;
     while (!validPlacement)
     {
-      cout << getName() << ", enter the coordinates of the ship " << ship.getSymbol() << endl;
-      cout << "Enter the row: ";
-      cin >> row;
-      cout << "Enter the column: ";
-      cin >> col;
+      bool validInput = false;
+
+      while (!validInput)
+      {
+        string rowInput, colInput;
+
+        try
+        {
+          cout << getName() << ", enter the coordinates of the ship " << ship.getSymbol() << endl;
+          cout << "Enter the row: ";
+          cin >> rowInput;
+          cout << "Enter the column: ";
+          cin >> colInput;
+
+          row = stoi(rowInput);
+          col = stoi(colInput);
+
+          validInput = true;
+        }
+        catch (const invalid_argument &e)
+        {
+          cout << "Invalid input. Please try again." << endl;
+        }
+      }
 
       if (ship.getSize() == 1)
       {
@@ -206,5 +220,4 @@ void Player::placeShips(vector<WarShip> &ships)
   }
 
   getPlayerBoard().setShips(ships);
-  getOpponentBoard().setShips(ships);
 }

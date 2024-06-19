@@ -13,7 +13,7 @@ class Player
 protected:
   string name;
   GameBoard playerBoard;
-  GameBoard opponentBoard;
+  vector<pair<int, int>> coordinatesShoted;
   vector<WarShip> ships;
   pair<int, int> shot;
   bool turn;
@@ -26,7 +26,7 @@ public:
   // Setters
   void setName(string);
   void setPlayerBoard();
-  void setOpponentBoard();
+  void setCoordinatesShoted(vector<pair<int, int>>);
   void setShips(vector<WarShip>);
   void setShot(pair<int, int>);
   void setTurn(bool);
@@ -34,14 +34,13 @@ public:
   // Getters
   string getName();
   GameBoard &getPlayerBoard();
-  GameBoard &getOpponentBoard();
+  vector<pair<int, int>> &getCoordinatesShoted();
   vector<WarShip> &getShips();
   pair<int, int> getShot();
   bool getTurn();
   bool getIsPlaying();
   // Methods
   void showPlayerBoard();
-  void showOpponentBoard();
   bool makeShot();
   void changeTurn();
   void placeShips(vector<WarShip> &);
