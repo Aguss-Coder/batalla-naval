@@ -8,6 +8,7 @@ Player::Player()
 {
   name = "Player";
   turn = false;
+  isPlaying = false;
 }
 Player::Player(string _name, GameBoard _playerBoard, pair<int, int> _shot, bool _turn)
 {
@@ -15,6 +16,7 @@ Player::Player(string _name, GameBoard _playerBoard, pair<int, int> _shot, bool 
   playerBoard = _playerBoard;
   shot = _shot;
   turn = _turn;
+  isPlaying = false;
 }
 
 // Setters
@@ -38,9 +40,13 @@ void Player::setShot(pair<int, int> _shot)
 {
   shot = _shot;
 }
-void Player::setTurn()
+void Player::setTurn(bool _turn)
 {
-  turn = false;
+  turn = _turn;
+}
+void Player::setIsPlaying(bool _isPlaying)
+{
+  isPlaying = _isPlaying;
 }
 
 // Getters
@@ -68,6 +74,10 @@ bool Player::getTurn()
 {
   return turn;
 }
+bool Player::getIsPlaying()
+{
+  return isPlaying;
+}
 
 // Methods
 void Player::showPlayerBoard()
@@ -75,7 +85,7 @@ void Player::showPlayerBoard()
   playerBoard.draw();
 }
 
-void Player::showEnemyBoard()
+void Player::showOpponentBoard()
 {
   opponentBoard.draw();
 }
@@ -93,6 +103,7 @@ void Player::changeTurn()
 void Player::placeShips(vector<WarShip> &ships)
 {
   vector<pair<int, int>> coordinates;
+  vector<pair<int, int>> savedCoordinates;
   int row, col;
   for (WarShip &ship : ships)
   {
@@ -137,7 +148,32 @@ void Player::placeShips(vector<WarShip> &ships)
         direction = toupper(direction);
       }
 
-      validPlacement = true; // Asume que la colocación es válida inicialmente
+      // verifica si hay un barco en las coordenadas ingresadas
+
+      /* if (savedCoordinates.size() == 0)
+      {
+        validPlacement = true;
+      }
+      else
+      {
+        for (pair<int, int> coord : savedCoordinates)
+        {
+          if (coord == make_pair(row, col))
+          {
+            cout << "There is already a ship in this position. Please try again." << endl;
+            validPlacement = false;
+            break; // Sale del bucle for y vuelve a solicitar la colocación
+          }
+        }
+        validPlacement = true;
+      }
+
+      if (!validPlacement)
+      {
+        continue; // Salta al siguiente ciclo del bucle while
+      } */
+
+      validPlacement = true;
       for (int i = 0; i < ship.getSize(); i++)
       {
         pair<int, int> newCoord;
@@ -157,6 +193,7 @@ void Player::placeShips(vector<WarShip> &ships)
           break; // Sale del bucle for y vuelve a solicitar la colocación
         }
         coordinates.push_back(newCoord);
+        savedCoordinates.push_back(newCoord);
       }
 
       if (!validPlacement)

@@ -14,13 +14,14 @@ protected:
 
 public:
   void clearScreen();
-  void loadGame(string);
-  void newGame();
-  void choosePlayer();
+  void readGameData(Human &, Human &, Bot &);
+  void loadGame(Human &, Human &, Bot &);
+  void newGame(Human &, Human &, Bot &);
+  void choosePlayer(Human &, Human &, Bot &);
   void setHumanGameSettings(Human &, Human &);
   void setBotGameSettings(Human &, Bot &);
-  void humanGameplay();
-  void botGameplay();
+  void humanGameplay(Human &, Human &);
+  void botGameplay(Human &, Bot &);
 };
 
 #endif

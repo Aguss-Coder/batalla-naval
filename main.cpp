@@ -1,11 +1,16 @@
 #include <iostream>
 #include "game.h"
+#include "human.h"
+#include "bot.h"
 
 using namespace std;
 
 int main(int argc, char const *argv[])
 {
   Game game;
+  Human player1;
+  Human player2;
+  Bot Bot;
 
   cout << "Welcome to Battleship!" << endl;
   cout << "1. New Game" << endl;
@@ -15,12 +20,11 @@ int main(int argc, char const *argv[])
 
   if (choice == 1)
   {
-    game.newGame();
+    game.newGame(player1, player2, Bot);
   }
   else if (choice == 2)
   {
-    game.loadGame("player1_savedGame.txt");
-    game.loadGame("player2_savedGame.txt");
+    game.loadGame(player1, player2, Bot);
   }
   else
   {
